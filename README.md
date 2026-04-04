@@ -25,6 +25,6 @@ pip install -r requirements.txt
 
 
 
-# Have to downgrade PyTorch to older version to make sure PyTorch can actually use the GPU PyTorch 2.5.1 + cu121
+# Have to downgrade PyTorch to older version to make sure PyTorch can actually use the GPU PyTorch 2.5.1 + cu121 (for my old laptop)
 
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
