@@ -12,10 +12,20 @@ Binary classification project for bone X-ray images:
 - `outputs/`: models, plots, predictions
 
 
+## Setup (Python virtual environment)
+
+### Linux / macOS
+```bash
+# from the project root
+python3 -m venv .venv
 source .venv/bin/activate
 
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 
-Have to downgrade PyTorch to older version to make sure PyTorch can actually use the GPU
+
+
+--Have to downgrade PyTorch to older version to make sure PyTorch can actually use the GPU
 PyTorch 2.5.1 + cu121
 
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
