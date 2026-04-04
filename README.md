@@ -23,7 +23,7 @@ source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-# Download Dataset
+# Download Dataset (get API Key then Download)
 mkdir -p data/raw
 kaggle datasets download -d mahmudulhasantasin/fracatlas-original-dataset -p data/raw
 
