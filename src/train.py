@@ -20,17 +20,25 @@ def get_device():
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def build_model(num_classes=2, freeze_backbone=True):
+def build_model(num_classes=2):
     model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
 
-    if freeze_backbone:
-        for param in model.parameters():
-            param.requires_grad = False
+    # Freeze everything first
+    for param in model.parameters():
+        param.requires_grad = False
 
+    # Unfreeze layer4
+    for param in model.layer4.parameters():
+        param.requires_grad = True
+
+    # Replace and unfreeze final classifier
     num_features = model.fc.in_features
     model.fc = nn.Linear(num_features, num_classes)
-    return model
 
+    for param in model.fc.parameters():
+        param.requires_grad = True
+
+    return model
 
 def compute_metrics(all_labels, all_preds, fractured_index):
     acc = accuracy_score(all_labels, all_preds)
@@ -115,9 +123,9 @@ def main():
     batch_size = 16
     num_workers = 2
     image_size = 224
-    num_epochs = 5
+    num_epochs = 10 # 5
     learning_rate = 1e-4
-    freeze_backbone = True
+    freeze_backbone = False # True
     model_output_path = "outputs/models/best_model.pth"
 
     # Device
@@ -150,8 +158,17 @@ def main():
     print("Fractured class index:", fractured_index)
 
     # Model
-    model = build_model(num_classes=2, freeze_backbone=freeze_backbone)
+    model = build_model(num_classes=2)
     model = model.to(device)
+
+    trainable_params = []
+    for name, param in model.named_parameters():
+        if param.requires_grad:
+            trainable_params.append(name)
+
+    print("\nTrainable parameters:")
+    for name in trainable_params:
+        print(" ", name)
 
     # Class-weighted loss for imbalance
     targets = train_dataset.targets
