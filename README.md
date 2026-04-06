@@ -41,3 +41,15 @@ After cleaning corrupted images and training a weighted ResNet18 transfer learni
 - F1-score: 38.06%
 
 These results show that the baseline model can detect a meaningful portion of fracture cases, but precision remains limited, indicating a relatively high false-positive rate. Future improvements will focus on fine-tuning deeper layers, training for more epochs, threshold tuning, and Grad-CAM explainability.
+
+
+## Results after fine-tuning
+
+After cleaning corrupted images and fine-tuning a pretrained ResNet18 model (unfreezing `layer4` and the final classification layer), the model achieved the following performance on the test set:
+
+- Accuracy: 89.13%
+- Precision: 68.10%
+- Recall: 73.15%
+- F1-score: 70.54%
+
+These results show that partial fine-tuning substantially improved performance over the initial baseline and enabled the model to detect fracture cases with a much better balance between sensitivity and precision.
