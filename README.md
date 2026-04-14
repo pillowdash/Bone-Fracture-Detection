@@ -30,6 +30,9 @@ kaggle datasets download -d mahmudulhasantasin/fracatlas-original-dataset -p dat
 # run the preparation script -  split folders and copy images into [fractured] and [normal] folder
 python -m src.prepare_fracatlas
 
+# move corrupted images to a quarantine folder
+python -m src.quarantine_bad_images
+
 # Have to downgrade PyTorch to older version to make sure PyTorch can actually use the GPU:PyTorch 2.5.1 + cu121 ( *NVIDIA Driver Version: 535* )
 pip install torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
 ```
